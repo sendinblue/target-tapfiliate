@@ -11,6 +11,7 @@ setup(
     py_modules=["target_tapfiliate"],
     install_requires=[
         "singer-python>=5.0.12",
+        "requests",
     ],
     entry_points="""
     [console_scripts]
