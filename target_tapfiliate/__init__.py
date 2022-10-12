@@ -78,7 +78,7 @@ def persist_lines(config, lines):
                 )
             stream = o["stream"]
 
-            if stream not in tapfiliate_client.tapfiliate_streams:
+            if stream not in tapfiliate_client.tapfiliate_post_streams:
                 raise Exception(
                     f"Stream {stream} can't be processed by target-tapfiliate"
                 )
