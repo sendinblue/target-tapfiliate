@@ -64,6 +64,8 @@ def persist_lines(config, lines):
 
             if stream == "conversions-add-commissions-to-conversion":
                 tapfiliate_client.conversions_add_commissions_to_conversion(o["record"])
+            else:
+                logger.debug(f"This tapfiliate client can't process this stream {stream}")
 
             state = None
         elif t == "STATE":

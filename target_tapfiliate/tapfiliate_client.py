@@ -51,11 +51,13 @@ class TapfiliateRestApi(object):
                 payload[parameter] = record.pop(parameter)
 
         if record:
-            LOGGER.debug(f"Received unexpected parameters : {record.keys()}")
+            LOGGER.warn(f"Received unexpected parameters : {record.keys()}")
 
         return uri_parameters, payload
 
     def conversions_add_commissions_to_conversion(self, record: dict):
+        LOGGER.debug(f"conversions_add_commissions_to_conversion received document : {record}")
+
         # https://tapfiliate.com/docs/rest/#conversions-add-commissions-to-conversion
         required_uri_parameters = ["conversion_id"]
         required_arguments = ["conversion_sub_amount"]
