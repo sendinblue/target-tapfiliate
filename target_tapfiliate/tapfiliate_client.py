@@ -121,7 +121,14 @@ class TapfiliateRestApi(object):
                 LOGGER.info(
                     f"This commission_type {payload.get('commission_type')} already exists in this conversion {uri_parameters.get('conversion_id')}"
                 )
+                with singer.metrics.Counter('bypassed_commissions_count') as counter:
+                    counter.increment()
+
                 return True
+            else:
+                LOGGER.info(
+                    f"This is a new commission_type {payload.get('commission_type')} for {uri_parameters.get('conversion_id')}"
+                )
 
         end_point = f"conversions/{uri_parameters.get('conversion_id')}/commissions/"
         response = self.post_sync_endpoints(end_point, payload)
@@ -129,6 +136,8 @@ class TapfiliateRestApi(object):
         LOGGER.info(
             f"New commission {response} added to conversion {uri_parameters.get('conversion_id')}"
         )
+        with singer.metrics.Counter('accepted_commissions_count') as counter:
+            counter.increment()
 
         return True
 
