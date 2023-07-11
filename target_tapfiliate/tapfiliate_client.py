@@ -151,7 +151,11 @@ class TapfiliateRestApi(object):
         while True:
             response = requests.post(url, headers=headers, json=payload, timeout=60)
 
-            if response.status_code != 200:
+            if response.status_code == 404:
+                LOGGER.warning(
+                    f"Error {response.status_code}: {response.content}"
+                )
+            elif response.status_code != 200:
                 if current_retry < self.retry:
                     LOGGER.warning(
                         f"Unexpected response status_code {response.status_code} i need to sleep 60s before retry {current_retry}/{self.retry}"
